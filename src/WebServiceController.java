@@ -88,9 +88,14 @@ public class WebServiceController {
 			case META_EMPLOYESS_V2:
 				return proxyInstance.getMetaEmployees2();
 			case MOST_SICK_EMPLOYEE:
-				return proxyInstance.getSickestEmployee();
+//				return proxyInstance.getSickestEmployee();
+				String[][] ret = proxyInstance.getSickestEmployee();
+				return ret;
+//				return proxyInstance.getSickestEmployee();
+				
 			case RELATIVES:
 				return proxyInstance.getRelatives();
+
 			default:
 				return null;
 			}
@@ -109,10 +114,6 @@ public class WebServiceController {
 			return ERP_QUERY.EMPLOYEE_ABSENCE;
 		case "Personal med flest antal sjukdagar":
 			return ERP_QUERY.MOST_SICK_EMPLOYEE;
-		case "Avdelningsinformation":
-			return null; // ??????
-		case "Personal med högst lön":
-			return null;// ??????
 		case "METADATA - Nycklar":
 			return ERP_QUERY.ALL_KEYS;
 		case "METADATA - Indexes":
@@ -124,9 +125,9 @@ public class WebServiceController {
 		case "METADATA - Tabeller2":
 			return ERP_QUERY.ALL_TABLES_V2;
 		case "METADATA - Kolumner":
-			return null;// ??????
+			return ERP_QUERY.META_EMPLOYEES_V1;
 		case "METADATA - Kolumner2":
-			return null;// ??????
+			return ERP_QUERY.META_EMPLOYESS_V2;
 		default:
 			return null;
 		}

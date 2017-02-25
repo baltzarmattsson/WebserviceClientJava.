@@ -161,7 +161,6 @@ public class View {
 				erpComboBox.addItem(availableErpQuery);
 		} catch (RemoteException e1) {
 				this.handleConnectException(e1);
-			//e1.printStackTrace();
 		}
 		
 		webServiceComboBox.addItemListener(e -> this.handleWSTableRequest(e, webServiceComboBox.getSelectedItem()));
@@ -171,10 +170,9 @@ public class View {
 	}
 	
 	// METHODS
-
 	private void handleConnectException(RemoteException e1) {
 
-		if (e1.getCause().toString().contains("ConnectException"))
+		if (e1.getCause() != null && e1.getCause().toString().contains("ConnectException"))
 			JOptionPane.showMessageDialog(frame, "Could not connect to webservice, please check the webservice state and try again");
 		else 
 			JOptionPane.showMessageDialog(frame, "RemoteExceptio: " + e1.getMessage());
@@ -209,7 +207,6 @@ public class View {
 				for (int i = 1; i < results.length; i++)
 					data[i - 1] = results[i];
 
-				// fucking dates
 				SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 				for (int i = 0; i < data.length; i++)
 					for (int j = 0; j < data[i].length; j++)
@@ -222,13 +219,6 @@ public class View {
 
 				DefaultTableModel dtm = new DefaultTableModel(data, colNames);
 				mainDataTable.setModel(dtm);
-
-				// for (Object o : results[results.length - 1])
-				// System.out.print(o.toString() + "\t");
-				// System.out.println();
-				// for (Object o : data[data.length - 1])
-				// System.out.print(o.toString() + "\t");
-				// System.out.println();
 			} else {
 				System.out.println("Results are null");
 			}
@@ -241,9 +231,6 @@ public class View {
 	}
 	
 	public void handleFilePickerButtonClick() {
-		System.out.println("file picker button");
-//		WebServiceController.
-
 		JFileChooser fileChooser = new JFileChooser();
 		int result = fileChooser.showOpenDialog(null);
 		if (result == JFileChooser.APPROVE_OPTION) {
@@ -256,7 +243,4 @@ public class View {
 			}
 		}
 	}
-	
-	
-
 }
