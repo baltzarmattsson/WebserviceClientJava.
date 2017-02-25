@@ -10,6 +10,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JTable;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -158,7 +160,8 @@ public class View {
 			for (String availableErpQuery : WebServiceController.GetErpQueries())
 				erpComboBox.addItem(availableErpQuery);
 		} catch (RemoteException e1) {
-			e1.printStackTrace();
+				this.handleConnectException(e1);
+			//e1.printStackTrace();
 		}
 		
 		webServiceComboBox.addItemListener(e -> this.handleWSTableRequest(e, webServiceComboBox.getSelectedItem()));
@@ -168,6 +171,15 @@ public class View {
 	}
 	
 	// METHODS
+
+	private void handleConnectException(RemoteException e1) {
+
+		if (e1.getCause().toString().contains("ConnectException"))
+			JOptionPane.showMessageDialog(frame, "Could not connect to webservice, please check the webservice state and try again");
+		else 
+			JOptionPane.showMessageDialog(frame, "RemoteExceptio: " + e1.getMessage());
+		System.exit(0);
+	}
 
 	public void handleWSTableRequest(ItemEvent ie, Object selectedItem) {
 		if (ie.getStateChange() == ItemEvent.SELECTED)
@@ -221,6 +233,8 @@ public class View {
 				System.out.println("Results are null");
 			}
 
+		} catch (RemoteException re) {
+			this.handleConnectException(re);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -237,8 +251,8 @@ public class View {
 			try {
 				String fileContent = WebServiceController.GetFileContent(selectedFilePath);
 				fileContentTextArea.setText(fileContent);
-			} catch (RemoteException e) {
-				e.printStackTrace();
+			} catch (RemoteException re) {
+				this.handleConnectException(re);
 			}
 		}
 	}
