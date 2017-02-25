@@ -36,31 +36,34 @@ public class WebServiceController {
 		case "Room":
 			return WS_TABLE.ROOM;
 		default:
-			throw new Exception("?");
+			return null;
 		}
 	}
 
 	
 	public static Object[] GetInfoFromDatabaseTable(String tableName) throws Exception {
-		
+
 		WS_TABLE table = WebServiceController.ConvertWSTableNameToEnum(tableName);
-		
-		switch (table) {
-		case BOOKING:
-			return proxyInstance.getList("Booking", true);
-		case BUILDING:
-			return proxyInstance.getList("Building", true);
-		case INSTITUTION:
-			return proxyInstance.getList("Institution", true);
-		case PERSON:
-			return proxyInstance.getList("Person", true);
-		case RESOURCE:
-			return proxyInstance.getList("Resource", true);
-		case ROOM:
-			return proxyInstance.getList("Room", true);
-		default:
-			return null;
-		}
+
+		if (table != null) {
+			switch (table) {
+			case BOOKING:
+				return proxyInstance.getList("Booking", true);
+			case BUILDING:
+				return proxyInstance.getList("Building", true);
+			case INSTITUTION:
+				return proxyInstance.getList("Institution", true);
+			case PERSON:
+				return proxyInstance.getList("Person", true);
+			case RESOURCE:
+				return proxyInstance.getList("Resource", true);
+			case ROOM:
+				return proxyInstance.getList("Room", true);
+			default:
+				return null;
+			}
+		} 
+		return null;
 	}
 	
 	public static Object[] GetInfoFromERPQuery(String erpQueryString) throws RemoteException {
@@ -88,11 +91,7 @@ public class WebServiceController {
 			case META_EMPLOYESS_V2:
 				return proxyInstance.getMetaEmployees2();
 			case MOST_SICK_EMPLOYEE:
-//				return proxyInstance.getSickestEmployee();
-				String[][] ret = proxyInstance.getSickestEmployee();
-				return ret;
-//				return proxyInstance.getSickestEmployee();
-				
+				return proxyInstance.getSickestEmployee();
 			case RELATIVES:
 				return proxyInstance.getRelatives();
 
