@@ -172,11 +172,12 @@ public class View {
 	// METHODS
 	private void handleConnectException(RemoteException e1) {
 
-		if (e1.getCause() != null && e1.getCause().toString().contains("ConnectException"))
+		if (e1.getCause() != null && e1.getCause().toString().contains("ConnectException")) {
 			JOptionPane.showMessageDialog(frame, "Could not connect to webservice, please check the webservice state and try again");
+			System.exit(0);
+		}
 		else 
-			JOptionPane.showMessageDialog(frame, "RemoteExceptio: " + e1.getMessage());
-		System.exit(0);
+			JOptionPane.showMessageDialog(frame, "RemoteException: " + e1.getMessage());
 	}
 
 	public void handleWSTableRequest(ItemEvent ie, Object selectedItem) {
@@ -220,7 +221,9 @@ public class View {
 				DefaultTableModel dtm = new DefaultTableModel(data, colNames);
 				mainDataTable.setModel(dtm);
 			} else {
-				System.out.println("Results are null");
+				results = new Object[2][1];
+				results[0][0] = "Tomt";
+				results[1][0] = "Ingen data hittad från tabellen \"" + selectedItem + "\"";
 			}
 
 		} catch (RemoteException re) {

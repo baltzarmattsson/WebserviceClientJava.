@@ -25,4 +25,5 @@ public interface WebServiceSoap extends java.rmi.Remote {
     public java.lang.String getFileContent(java.lang.String filepath) throws java.rmi.RemoteException;
     public java.lang.String[] getTableNames() throws java.rmi.RemoteException;
     public java.lang.String[] getErpQueries() throws java.rmi.RemoteException;
+    public java.lang.String[][] getERPMethodBasedOnDescriptionString(java.lang.String description) throws java.rmi.RemoteException;
 }

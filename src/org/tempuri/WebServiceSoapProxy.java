@@ -146,5 +146,11 @@ public class WebServiceSoapProxy implements org.tempuri.WebServiceSoap {
     return webServiceSoap.getErpQueries();
   }
   
+  public java.lang.String[][] getERPMethodBasedOnDescriptionString(java.lang.String description) throws java.rmi.RemoteException{
+    if (webServiceSoap == null)
+      _initWebServiceSoapProxy();
+    return webServiceSoap.getERPMethodBasedOnDescriptionString(description);
+  }
+  
   
 }
