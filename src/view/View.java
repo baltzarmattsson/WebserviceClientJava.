@@ -1,3 +1,4 @@
+package view;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -22,6 +23,9 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import controller.ViewController;
+
 import javax.swing.JButton;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
@@ -155,9 +159,9 @@ public class View {
 		
 		// Adding data to the dropdown boxes
 		try {
-			for (String availableTable : WebServiceController.GetTableNamesForWS())
+			for (String availableTable : ViewController.GetTableNamesForWS())
 				webServiceComboBox.addItem(availableTable);
-			for (String availableErpQuery : WebServiceController.GetErpQueries())
+			for (String availableErpQuery : ViewController.GetErpQueries())
 				erpComboBox.addItem(availableErpQuery);
 		} catch (RemoteException e1) {
 				this.handleConnectException(e1);
@@ -198,13 +202,15 @@ public class View {
 		try {
 			Object[][] results = null;
 			if (comboBoxSender == ComboBoxSender.WS)
-				results = (Object[][]) WebServiceController.GetInfoFromDatabaseTable(selectedItem);
+				results = (Object[][]) ViewController.GetInfoFromDatabaseTable(selectedItem);
 			else
-				results = (Object[][]) WebServiceController.GetInfoFromERPQuery(selectedItem);
+				results = (Object[][]) ViewController.GetInfoFromERPQuery(selectedItem);
 
 			if (results != null) {
 				Object[] colNames = results[0];
 				Object[][] data = new Object[results.length - 1][results[0].length];
+				
+				// Loop starting at 1 since the column names are at results[0]
 				for (int i = 1; i < results.length; i++)
 					data[i - 1] = results[i];
 
@@ -239,7 +245,7 @@ public class View {
 		if (result == JFileChooser.APPROVE_OPTION) {
 			String selectedFilePath = fileChooser.getSelectedFile().getAbsolutePath();
 			try {
-				String fileContent = WebServiceController.GetFileContent(selectedFilePath);
+				String fileContent = ViewController.GetFileContent(selectedFilePath);
 				fileContentTextArea.setText(fileContent);
 			} catch (RemoteException re) {
 				this.handleConnectException(re);

@@ -1,7 +1,8 @@
+package controller;
 import java.rmi.RemoteException;
 import org.tempuri.WebServiceSoapProxy;
 
-public class WebServiceController {
+public class ViewController {
 
 	public static WebServiceSoapProxy proxyInstance = new WebServiceSoapProxy();
 
